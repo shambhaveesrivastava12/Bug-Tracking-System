@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/css/home.css">
+
+<div id="main_container">
+    <div class="content_container">
+        <div class="card" id="add_project" onclick="toggle_form()">
+            <div id="add_icon">
+                <img src="/images/plus-solid.svg" alt="" srcset="">
+            </div>
+        </div>
+        <% for(project of projects) { %>
+            <div class="card" id='card_<%= project._id %>'>
+                <div class="part1" onclick="show_details('<%= project._id %>')">
+                    <h2>
+                        <%= project.name %>
+                    </h2>
+                    <p>
+                        <%= project.author %>
+                    </p>
+                </div>
+                <div class="part2">
+                    <div class="delete_project" onclick="delete_project('<%= project._id %>')">
+                        X
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+
+</div>
+<div class="new_project_form_container" id="get_form">
+    <span onclick="toggle_form()">X</span>
+    <form action="" method="" id="new_project_form">
+        <input type="text" name="name" id="name" placeholder="Name of Project..." required><br>
+        <textarea name="description" id="" cols="23" rows="2" placeholder="Description..." required></textarea>
+        <input type="text" name="author" id="author" placeholder="Author..." required><br>
+        <button type="submit">Create Project</button>
+    </form>
+</div>
+<script src="/js/home.js"></script>

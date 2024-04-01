@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="/css/project_details.css">
+<div id="main_container">
+    <div class="heading">
+        <h1>
+            <%= project_details.name %>
+        </h1>
+        <p>
+            <%= project_details.author %>
+        </p>
+    </div>
+    <div class="information">
+        <p>
+            <%= project_details.description %>
+        </p>
+    </div>
+    <div class="operations">
+        <div class="search_box">
+            <div class="title_search">
+                <textarea name="title_search" id="title_search" cols="10" rows="30"
+                    placeholder="Title search..."></textarea>
+            </div>
+            <div class="desc_search">
+                <textarea name="desc_search" id="desc_search" cols="10" rows="30"
+                    placeholder="Description search..."></textarea>
+            </div>
+            <div class="author_search">
+                <textarea name="author_search" id="author_search" cols="10" rows="30" placeholder="Author search..."></textarea>
+            </div>
+            <div class="label_search">
+                <div class="label_container">
+                </div>
+            </div>
+            <button type="submit"> Search </button>
+        </div>
+        <div class="bugs_container">
+            <% if(project_details.issue.length==0){ %>
+                <h1>No Bugs Reported</h1>
+            <% }else{ %>
+                <% for(bug of project_details.issue) {%>
+                    <div class="bug" id="issue_<%= bug.id %>">
+                        <div class="bug_head">
+                            <div class="bug_title">
+                                <%= bug.title %>
+                            </div>
+                            <div class="label_holder">
+                                    <% for(label of bug.labels) { %>
+                                        <% if(label){ %> 
+                                            <div class="labels"><%= label %> </div>
+                                        <% } %> 
+                                    <% } %>
+                            </div>
+                            <!-- take note of them in project db -->
+                            <div class="bug_author">
+                                <%= bug.author %>
+                            </div>
+                        </div>
+                        <div class="divide">
+                            <div class="bug_description">
+                                <%= bug.description %>
+                            </div>
+                            <div class="del_button" onclick="close_issue('<%= bug.id %>')">X</div>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
+
+            <button type="submit" onclick="toggle_form()"><span>+</span></button>
+        </div>
+    </div>
+
+</div>
+
+<div class="new_issue_form_container" id="get_form">
+    <span onclick="toggle_form()">X</span>
+    <form action="" method="" id="new_issue_form" autocomplete="off">
+        <input type="text" name="name" id="name" placeholder="Title..." required><br>
+        <textarea name="description" id="" cols="23" rows="2" placeholder="Description..." required></textarea>
+        <input type="text" name="author" id="author" placeholder="Author..." required><br>
+        <input type="text" name="labels" id="labels" placeholder="Enter Labels...">
+        <input type="hidden" name="project_id" id="project_id" value="<%= project_details.id %>">
+        <div class="search_suggest">
+            <ul>
+            </ul>
+        </div>
+        <div id="display_labels">
+        </div>
+        <button type="submit">Create Issue</button>
+    </form>
+
+    <div id="check_before_submit">
+        <input type="checkbox" name="bug_val" id="confirmation_box">
+        <label for="confirmation_box">Confirm to create Issue</label>
+    </div>
+
+</div>
+
+<script src="/js/project_details.js"></script>
